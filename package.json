@@ -1,6 +1,6 @@
 {
   "name": "skatteetaten",
-  "homepage": "http://{username}.github.io/{repo-name}",
+  "homepage": "http://annalytic.github.io/bekk-case",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
