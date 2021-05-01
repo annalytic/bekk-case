@@ -1,23 +1,25 @@
 /**
 * External dependencies
 */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 /**
 * Internal dependencies
 */
 import logo from './logo.svg';
-import Arbeidsreise from './components/Arbeidsreise/Arbeidsreise';
+import Reiser from './components/Reiser/Reiser';
+import Results from './components/Results/Results';
+
+let resetKey = 0;
 
 function App() {
   const [ arbeidsreiser, setArbeidsreiser ] = useState([{}]);
+  const [ besoeksreiser, setBesoeksreiser ] = useState([{}]);
+  const [ utgifter, setUtgifter ] = useState(0);
+  const [ loading, setLoading ] = useState(false);
+  const [ result, setResult ] = useState(false);
 
-  useEffect(() => {
-    console.log(arbeidsreiser);
-  }, [arbeidsreiser]);
-
-
-  const handleUpdateAR = ( id, obj ) => {
+  const handleEditAR = ( id, obj ) => {
     const newArbeidsreiser = [...arbeidsreiser];
     newArbeidsreiser[id] = obj;
     setArbeidsreiser(newArbeidsreiser);
@@ -26,6 +28,55 @@ function App() {
   const handleAddAR = () => {
     const newArbeidsreiser = [...arbeidsreiser, {}];
     setArbeidsreiser(newArbeidsreiser);
+  }
+
+  const handleEditBR = ( id, obj ) => {
+    const newBesoeksreiser = [...besoeksreiser];
+    newBesoeksreiser[id] = obj;
+    setBesoeksreiser(newBesoeksreiser);
+  }
+
+  const handleAddBR = () => {
+    const newBesoeksreiser = [...besoeksreiser, {}];
+    setBesoeksreiser(newBesoeksreiser);
+  }
+
+  const handleReset = () => {
+    resetKey+=1;
+    setArbeidsreiser([{}]);
+    setBesoeksreiser([{}]);
+  }
+
+  const handleSubmit = ( e ) => {
+    e.preventDefault();
+
+    const filteredArbeidsreiser = arbeidsreiser.filter(value => Object.keys(value).length !== 0);
+    const filteredBesoeksreiser = besoeksreiser.filter(value => Object.keys(value).length !== 0);
+
+    const data = {
+      'arbeidsreiser': filteredArbeidsreiser,
+      'besoeksreiser': filteredBesoeksreiser,
+      'utgifterBomFergeEtc': utgifter
+    }
+
+    console.log(data);
+
+    const url = 'https://9f22opit6e.execute-api.us-east-2.amazonaws.com/default/reisefradrag';
+    setLoading( true );
+
+    fetch( url, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify( data ),
+    } )
+      .then( ( res ) => res.json() )
+      .then( ( res ) => {
+        setLoading( false );
+        setResult( res.reisefradrag );
+      } );
   }
 
   return (
@@ -39,38 +90,66 @@ function App() {
       </header>
 
       <main>
-      <form>
-        <h2>Arbeidsreiser</h2>
-        <ul className="arbeidsreiser unstyled-list">
-          { arbeidsreiser.map( ( arbeidsreise, id ) => {
-            return (
-              <Arbeidsreise id={ id } handleUpdateAR={ handleUpdateAR }/>
-            );
-          } )}
-        </ul>
+        { ( ! loading && result !== false ) && <Results result={ result } /> }
 
-        <button
-          type="button"
-          onClick={ handleAddAR }
-        >
-          Legg til arbeidsreise
-        </button>
+        <form onSubmit={ handleSubmit }>
+          <h2>Arbeidsreiser</h2>
+          <ul className="reiser arbeidsreiser unstyled-list">
+            { arbeidsreiser.map( ( arbeidsreise, id ) => {
+              return (
+                <Reiser key={ `${resetKey}-${id}` } id={ id } handleEdit={ handleEditAR } />
+              );
+            } )}
+          </ul>
 
-        <h2>Besoeksreiser</h2>
-        <ul className="besoeksreiser unstyled-list">
-        </ul>
+          <button
+            type="button"
+            onClick={ handleAddAR }
+          >
+            Legg til arbeidsreise
+          </button>
 
-        <div className="field-group floating-label">
-          <input
-            type="number"
-            name="utgifter"
-            min="0"
-            placeholder="0"
-          />
-          <label htmlFor="utgifter">Utgifter</label>
-        </div>
-        <input type="submit" value="submit" />
-      </form>
+          <h2>Besøksreiser</h2>
+          <ul className="reiser besoeksreiser unstyled-list">
+            { besoeksreiser.map( ( besoeksreise, id ) => {
+              return (
+                <Reiser key={ `${resetKey}-${id}` } id={ id } handleEdit={ handleEditBR } />
+              );
+            } )}
+          </ul>
+
+          <button
+            type="button"
+            onClick={ handleAddBR }
+          >
+            Legg til besøksreise
+          </button>
+
+          <h2>Utgifter</h2>
+          <div className="field-group floating-label">
+            <input
+              type="number"
+              name="utgifter"
+              min="0"
+              placeholder="0"
+              onChange={ ( e ) => setUtgifter( e.target.value )}
+            />
+            <label htmlFor="utgifter">Utgifter</label>
+          </div>
+
+          <input type="submit" value="Beregn" />
+          { loading && (
+            <span>spinner</span>
+          )}
+
+          <button
+            type="button"
+            onClick={ handleReset }
+            className="reset"
+          >
+            Begynn på nytt
+          </button>
+        </form>
       </main>
     </div>
   );

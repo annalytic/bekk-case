@@ -1,5 +1,6 @@
 /* Component styles */
 @import './App.css';
+@import './components/Results/Results.css';
 
 /* Global styles */
 @import './styles/forms.css';
@@ -20,6 +21,6 @@ code {
     monospace;
 }
 
-.arbeidsreiser li {
+.reiser li {
   display: flex;
 }

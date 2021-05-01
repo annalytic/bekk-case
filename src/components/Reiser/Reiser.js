@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-function Arbeidsreise( { id, handleUpdateAR } ) {
-	const [ info, setInfo ] = useState( {} );
+function Reiser( { id, handleEdit } ) {
+	const [ data, setData ] = useState( { km: '', antall: '' } );
 
 	const handleChange = ( e ) => {
-		const value = e.target.value;
-		const name = e.target.name;
+		let value = e.target.value;
+		let name = e.target.name;
 
-		setInfo( { ...info, [name]: value } );
-		handleUpdateAR( id, info );
+		setData( { ...data, [name]: value } );
+		handleEdit( id, { ...data, [name]: value } );
 	}
 
 	return (
@@ -18,7 +18,9 @@ function Arbeidsreise( { id, handleUpdateAR } ) {
 					type="number"
 					name="km"
 					min="0"
+					max="75000"
 					placeholder="Km"
+					value={ data.km }
 					onChange={ handleChange }
 				/>
 				<label htmlFor="km">Km</label>
@@ -30,6 +32,7 @@ function Arbeidsreise( { id, handleUpdateAR } ) {
 					name="antall"
 					min="0"
 					placeholder="Antall"
+					value={ data.antall }
 					onChange={ handleChange }
 				/>
 				<label htmlFor="antall">Antall</label>
@@ -38,4 +41,4 @@ function Arbeidsreise( { id, handleUpdateAR } ) {
 	);
 }
 
-export default Arbeidsreise;
+export default Reiser;

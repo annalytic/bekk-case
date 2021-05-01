@@ -1,0 +1,17 @@
+.fradrag {
+	background-color: #fff;
+	border: 1px solid black;
+	padding: 20px;
+	max-width: 200px;
+	margin-top: 40px;
+}
+
+.fradrag h3 {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.fradrag span {
+	display: block;
+	margin-top: 10px;
+}

@@ -4,6 +4,7 @@ input[type="number"] {
   box-shadow: none;
   border-radius: 4px;
   font-size: 16px;
+  width: 200px;
 }
 
 label {
@@ -37,4 +38,42 @@ label {
 .floating-label input[type="number"]:not(:placeholder-shown) {
   padding-top: 24px;
   padding-bottom: 8px;
+}
+
+
+button[type="button"],
+input[type="submit"] {
+  border-width: 3px;
+  font-weight: normal;
+  padding: 7px 15px;
+  transition: background 0.3s ease 0s;
+  text-align: center;
+  vertical-align: top;
+  border-style: solid;
+  border-radius: 6px;
+  border-color: rgb(19, 98, 174);
+  background: rgb(19, 98, 174);
+  color: rgb(255, 255, 255);
+  box-shadow: rgb(187 187 187) 0px 8px 6px -6px;
+  height: auto;
+  min-height: 32px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button[type="button"]:hover,
+input[type="submit"]:hover {
+  border-color: rgb(19, 98, 174);
+  background: rgb(205, 225, 249);
+  color: rgb(19, 98, 174);
+}
+
+input[type="submit"] {
+  font-size: 24px;
+}
+
+.reset {
+  display: block;
+  margin-top: 30px;
 }
