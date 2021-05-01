@@ -12,9 +12,8 @@ label {
 }
 
 .field-group {
-  display: flex;
   margin-right: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .floating-label {
@@ -76,4 +75,17 @@ input[type="submit"] {
 .reset {
   display: block;
   margin-top: 30px;
+}
+
+.field-group.error input[type="number"] {
+  outline: red auto 1px;
+  border-radius: 4px;
+}
+
+.error-message {
+  display: block;
+  margin-top: 4px;
+  color: red;
+  font-size: 13px;
+  font-weight: 600;
 }

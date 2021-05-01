@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 * Internal dependencies
 */
 import logo from './logo.svg';
-import Reiser from './components/Reiser/Reiser';
+import Travels from './components/Travels/Travels';
 import Results from './components/Results/Results';
 
 let resetKey = 0;
@@ -18,6 +18,7 @@ function App() {
   const [ utgifter, setUtgifter ] = useState(0);
   const [ loading, setLoading ] = useState(false);
   const [ result, setResult ] = useState(false);
+  const [ reset, setReset ] = useState(false);
 
   const handleEditAR = ( id, obj ) => {
     const newArbeidsreiser = [...arbeidsreiser];
@@ -45,11 +46,14 @@ function App() {
     resetKey+=1;
     setArbeidsreiser([{}]);
     setBesoeksreiser([{}]);
+    setReset(true);
   }
 
   const handleSubmit = ( e ) => {
     e.preventDefault();
+    setReset(false);
 
+    /* Filters out empty objects */
     const filteredArbeidsreiser = arbeidsreiser.filter(value => Object.keys(value).length !== 0);
     const filteredBesoeksreiser = besoeksreiser.filter(value => Object.keys(value).length !== 0);
 
@@ -90,14 +94,16 @@ function App() {
       </header>
 
       <main>
-        { ( ! loading && result !== false ) && <Results result={ result } /> }
+        { ( !reset && ! loading && result !== false ) && (
+          <Results result={ result } />
+        ) }
 
         <form onSubmit={ handleSubmit }>
           <h2>Arbeidsreiser</h2>
           <ul className="reiser arbeidsreiser unstyled-list">
             { arbeidsreiser.map( ( arbeidsreise, id ) => {
               return (
-                <Reiser key={ `${resetKey}-${id}` } id={ id } handleEdit={ handleEditAR } />
+                <Travels key={ `${resetKey}-${id}` } id={ id } handleEdit={ handleEditAR } />
               );
             } )}
           </ul>
@@ -113,7 +119,7 @@ function App() {
           <ul className="reiser besoeksreiser unstyled-list">
             { besoeksreiser.map( ( besoeksreise, id ) => {
               return (
-                <Reiser key={ `${resetKey}-${id}` } id={ id } handleEdit={ handleEditBR } />
+                <Travels key={ `${resetKey}-${id}` } id={ id } handleEdit={ handleEditBR } />
               );
             } )}
           </ul>

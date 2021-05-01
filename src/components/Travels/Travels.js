@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 
-function Reiser( { id, handleEdit } ) {
+function Travels( { id, handleEdit } ) {
 	const [ data, setData ] = useState( { km: '', antall: '' } );
+	const [ error, setError ] = useState( false );
 
+	/* Handles when user types in input fields */
 	const handleChange = ( e ) => {
 		let value = e.target.value;
 		let name = e.target.name;
 
 		setData( { ...data, [name]: value } );
 		handleEdit( id, { ...data, [name]: value } );
+
+		console.log(name, value);
+
+		if ( name === 'antall' && value.length > 0 ) {
+			setError(false);
+		}
 	}
 
 	return (
@@ -26,7 +34,7 @@ function Reiser( { id, handleEdit } ) {
 				<label htmlFor="km">Km</label>
 			</div>
 
-			<div className="field-group floating-label">
+			<div className={ "field-group floating-label"  + ( error ? ' error' : '' ) }>
 				<input
 					type="number"
 					name="antall"
@@ -36,9 +44,10 @@ function Reiser( { id, handleEdit } ) {
 					onChange={ handleChange }
 				/>
 				<label htmlFor="antall">Antall</label>
+				{ error && <span className="error-message">Fyll ut antall</span> }
 			</div>
 		</li>
 	);
 }
 
-export default Reiser;
+export default Travels;
