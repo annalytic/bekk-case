@@ -1,0 +1,40 @@
+input[type="number"] {
+  padding: 16px;
+  border: 0;
+  box-shadow: none;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+label {
+  font-size: 12px;
+}
+
+.field-group {
+  display: flex;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.floating-label {
+  position: relative;
+}
+
+.floating-label label {
+  left: 16px;
+  color: grey;
+  opacity: 0;
+  position: absolute;
+  top: 15px;
+  transition: all 200ms ease;
+}
+
+.floating-label input[type="number"]:not(:placeholder-shown) + label {
+  opacity: 1;
+  transform: translateY(-10px);
+}
+
+.floating-label input[type="number"]:not(:placeholder-shown) {
+  padding-top: 24px;
+  padding-bottom: 8px;
+}

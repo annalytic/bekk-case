@@ -13,19 +13,27 @@ function Arbeidsreise( { id, handleUpdateAR } ) {
 
 	return (
 		<li data-id={ id }>
-			<label htmlFor="km" />
-			<input
-				type="text"
-				name="km"
-				onChange={ handleChange }
-			/>
+			<div className="field-group floating-label">
+				<input
+					type="number"
+					name="km"
+					min="0"
+					placeholder="Km"
+					onChange={ handleChange }
+				/>
+				<label htmlFor="km">Km</label>
+			</div>
 
-			<label htmlFor="antall" />
-			<input
-				type="text"
-				name="antall"
-				onChange={ handleChange }
-			/>
+			<div className="field-group floating-label">
+				<input
+					type="number"
+					name="antall"
+					min="0"
+					placeholder="Antall"
+					onChange={ handleChange }
+				/>
+				<label htmlFor="antall">Antall</label>
+			</div>
 		</li>
 	);
 }

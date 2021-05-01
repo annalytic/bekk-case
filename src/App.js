@@ -10,7 +10,7 @@ import logo from './logo.svg';
 import Arbeidsreise from './components/Arbeidsreise/Arbeidsreise';
 
 function App() {
-  const [ arbeidsreiser, setArbeidsreiser ] = useState([{ km: '', antall: ''}]);
+  const [ arbeidsreiser, setArbeidsreiser ] = useState([{}]);
 
   useEffect(() => {
     console.log(arbeidsreiser);
@@ -24,9 +24,7 @@ function App() {
   }
 
   const handleAddAR = () => {
-    const newArbeidsreiser = [...arbeidsreiser];
-    newArbeidsreiser[newArbeidsreiser.length] = {};
-
+    const newArbeidsreiser = [...arbeidsreiser, {}];
     setArbeidsreiser(newArbeidsreiser);
   }
 
@@ -42,8 +40,8 @@ function App() {
 
       <main>
       <form>
-        <ul className="arbeidsreiser">
-          Arbeidsreiser
+        <h2>Arbeidsreiser</h2>
+        <ul className="arbeidsreiser unstyled-list">
           { arbeidsreiser.map( ( arbeidsreise, id ) => {
             return (
               <Arbeidsreise id={ id } handleUpdateAR={ handleUpdateAR }/>
@@ -58,13 +56,19 @@ function App() {
           Legg til arbeidsreise
         </button>
 
-        <ul className="besoeksreiser">
-          Besoeksreiser
+        <h2>Besoeksreiser</h2>
+        <ul className="besoeksreiser unstyled-list">
         </ul>
 
-        <label htmlFor="utgifter">Utgifter</label>
-        <input type="text" name="utgifter" />
-
+        <div className="field-group floating-label">
+          <input
+            type="number"
+            name="utgifter"
+            min="0"
+            placeholder="0"
+          />
+          <label htmlFor="utgifter">Utgifter</label>
+        </div>
         <input type="submit" value="submit" />
       </form>
       </main>
