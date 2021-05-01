@@ -1,18 +1,16 @@
 function Results( { result } ) {
-	return (
-		<div className="fradrag">
-			{ ( result >= 0 && result !== null ) && (
-				<>
-					<h3>Ditt reisefradrag:</h3>
-					<span>{ result } kr</span>
-				</>
-			) }
-
-			{ result === null && (
-				<h3>Feil</h3>
-			) }
-		</div>
-	);
+	if ( result === null ) {
+		return (
+			<h3>Noe gikk galt</h3>
+		);
+	} else {
+		return (
+			<>
+				<h3>Ditt reisefradrag:</h3>
+				<span>{ result } kr</span>
+			</>
+		);
+	}
 }
 
 export default Results;

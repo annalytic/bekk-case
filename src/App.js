@@ -17,7 +17,7 @@ function App() {
   const [ besoeksreiser, setBesoeksreiser ] = useState([{}]);
   const [ utgifter, setUtgifter ] = useState(0);
   const [ loading, setLoading ] = useState(false);
-  const [ result, setResult ] = useState(false);
+  const [ result, setResult ] = useState(null);
   const [ reset, setReset ] = useState(false);
 
   const handleEditAR = ( id, obj ) => {
@@ -94,8 +94,13 @@ function App() {
       </header>
 
       <main>
-        { ( !reset && ! loading && result !== false ) && (
-          <Results result={ result } />
+        {console.log(result)}
+        { ( ! reset && ! loading && result >= 0 && result !== null ) && (
+          <>
+          <div className="fradrag">
+            <Results result={ result } />
+          </div>
+          </>
         ) }
 
         <form onSubmit={ handleSubmit }>

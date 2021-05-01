@@ -13,5 +13,7 @@
 
 .fradrag span {
 	display: block;
+	font-weight: 600;
+	font-size: 36px;
 	margin-top: 10px;
 }

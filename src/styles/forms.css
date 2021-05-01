@@ -61,15 +61,22 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-button[type="button"]:hover,
-input[type="submit"]:hover {
+button[type="button"]:hover {
   border-color: rgb(19, 98, 174);
   background: rgb(205, 225, 249);
   color: rgb(19, 98, 174);
 }
 
 input[type="submit"] {
-  font-size: 24px;
+  font-size: 20px;
+  border-color: #00b700;
+  background-color: #00b700;
+}
+
+input[type="submit"]:hover {
+  border-color: #00b700;
+  background: rgb(205, 225, 249);
+  color: #00b700;
 }
 
 .reset {

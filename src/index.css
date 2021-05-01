@@ -21,6 +21,8 @@ code {
     monospace;
 }
 
-.reiser li {
-  display: flex;
+@media screen and (min-width: 800px) {
+  .reiser li {
+    display: flex;
+  }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 function Travels( { id, handleEdit } ) {
+	/* Can set initial antall to 1. */
 	const [ data, setData ] = useState( { km: '', antall: '' } );
 	const [ error, setError ] = useState( false );
 
@@ -12,10 +13,12 @@ function Travels( { id, handleEdit } ) {
 		setData( { ...data, [name]: value } );
 		handleEdit( id, { ...data, [name]: value } );
 
-		console.log(name, value);
-
 		if ( name === 'antall' && value.length > 0 ) {
 			setError(false);
+		}
+
+		if ( name === 'antall' && value.length === 0 ) {
+			setError(true);
 		}
 	}
 
