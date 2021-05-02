@@ -1,10 +1,10 @@
 /* Component styles */
 @import './App.css';
-@import './components/Results/Results.css';
 
 /* Global styles */
 @import './styles/forms.css';
 @import './styles/lists.css';
+@import './styles/loader.css';
 
 body {
   margin: 0;

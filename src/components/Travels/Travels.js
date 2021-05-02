@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 
 function Travels( { id, handleEdit } ) {
-	/* Can set initial antall to 1. */
+	/**
+	* States
+	*/
 	const [ data, setData ] = useState( { km: '', antall: '' } );
 	const [ error, setError ] = useState( false );
 
-	/* Handles when user types in input fields */
+	/* ------------------------------ */
+
+	/**
+	* Functions
+	*/
+	/* Handles when user types in input fields. */
 	const handleChange = ( e ) => {
 		let value = e.target.value;
 		let name = e.target.name;
@@ -22,6 +29,11 @@ function Travels( { id, handleEdit } ) {
 		}
 	}
 
+	/* ------------------------------ */
+
+	/**
+	* Render
+	*/
 	return (
 		<li data-id={ id }>
 			<div className="field-group floating-label">

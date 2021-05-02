@@ -13,13 +13,23 @@ import Results from './components/Results/Results';
 let resetKey = 0;
 
 function App() {
+  /**
+  * States
+  */
   const [ arbeidsreiser, setArbeidsreiser ] = useState([{}]);
   const [ besoeksreiser, setBesoeksreiser ] = useState([{}]);
   const [ utgifter, setUtgifter ] = useState(0);
+
   const [ loading, setLoading ] = useState(false);
+  const [ error, setError ] = useState(false);
   const [ result, setResult ] = useState(null);
   const [ reset, setReset ] = useState(false);
 
+  /* ------------------------------ */
+
+  /**
+  * Functions
+  */
   const handleEditAR = ( id, obj ) => {
     const newArbeidsreiser = [...arbeidsreiser];
     newArbeidsreiser[id] = obj;
@@ -53,24 +63,24 @@ function App() {
     e.preventDefault();
     setReset(false);
 
-    /* Filters out empty objects */
+    /* Filters out non-empty objects. */
     const filteredArbeidsreiser = arbeidsreiser.filter(value => Object.keys(value).length !== 0);
     const filteredBesoeksreiser = besoeksreiser.filter(value => Object.keys(value).length !== 0);
 
+    /* Constructs data to post to API */
     const data = {
       'arbeidsreiser': filteredArbeidsreiser,
       'besoeksreiser': filteredBesoeksreiser,
       'utgifterBomFergeEtc': utgifter
     }
 
-    console.log(data);
-
     const url = 'https://9f22opit6e.execute-api.us-east-2.amazonaws.com/default/reisefradrag';
+
     setLoading( true );
 
+    /* Posts data to API and handles response. */
     fetch( url, {
       method: 'POST',
-      mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -80,27 +90,39 @@ function App() {
       .then( ( res ) => {
         setLoading( false );
         setResult( res.reisefradrag );
-      } );
+      } )
+      .catch( ( error ) => {
+        console.error( 'Error', error );
+        setError( true );
+        setLoading( false );
+      });
   }
 
+  /* ------------------------------ */
+
+  /**
+  * Render
+  */
   return (
     <div className="App">
       <header>
         <img src={logo} className="logo" alt="logo" />
-        <div className="header-content">
+        <div>
           <h1>Reiseregning</h1>
           <p>Beregning av reisefradrag</p>
         </div>
       </header>
 
       <main>
-        {console.log(result)}
         { ( ! reset && ! loading && result >= 0 && result !== null ) && (
-          <>
-          <div className="fradrag">
-            <Results result={ result } />
+          <Results result={ result } />
+        ) }
+
+        { ( ! reset && error ) && (
+          <div className="info">
+            <h3>Noe gikk galt</h3>
+            <p>Prøv igjen senere eller ta kontakt med oss.</p>
           </div>
-          </>
         ) }
 
         <form onSubmit={ handleSubmit }>
@@ -148,10 +170,9 @@ function App() {
             <label htmlFor="utgifter">Utgifter</label>
           </div>
 
-          <input type="submit" value="Beregn" />
-          { loading && (
-            <span>spinner</span>
-          )}
+          { ! loading && <input type="submit" value="Beregn" /> }
+
+          { loading && <div className="loader"></div> }
 
           <button
             type="button"
