@@ -34,6 +34,7 @@ function Travels( { id, handleEdit } ) {
 					min="0"
 					max="75000"
 					placeholder="Km"
+					pattern="[0-9]*"
 					value={ data.km }
 					onChange={ handleChange }
 				/>
@@ -46,6 +47,7 @@ function Travels( { id, handleEdit } ) {
 					name="antall"
 					min="0"
 					placeholder="Antall"
+					pattern="[0-9]*"
 					value={ data.antall }
 					onChange={ handleChange }
 				/>

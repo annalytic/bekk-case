@@ -133,6 +133,7 @@ function App() {
         <div>
           <h1>Reiseregning</h1>
           <p>Beregning av reisefradrag</p>
+          <p>Test test githubpages!</p>
         </div>
       </header>
 
@@ -188,6 +189,7 @@ function App() {
               name="utgifter"
               min="0"
               placeholder="0"
+              pattern="[0-9]*"
               value={ utgifter }
               onChange={ ( e ) => setUtgifter( e.target.value )}
             />
