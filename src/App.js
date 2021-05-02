@@ -133,7 +133,6 @@ function App() {
         <div>
           <h1>Reiseregning</h1>
           <p>Beregning av reisefradrag</p>
-          <p>Test test githubpages!</p>
         </div>
       </header>
 
