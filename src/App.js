@@ -71,7 +71,7 @@ function App() {
 
     /* Make sure that if one input field has value, the other one has too. */
     const invalidArbeidsreiser = filteredArbeidsreiser.some( obj => {
-      console.log(Object.values(obj).every( value => value ));
+        console.log(Object.values(obj).every( value => value ));
         return ! Object.values(obj).every( value => value );
     });
 
@@ -180,18 +180,18 @@ function App() {
             Legg til besøksreise
           </button>
 
-          <h2>Utgifter</h2>
+          <h2>Utgifter til bom, ferge etc.</h2>
           <div className="field-group floating-label">
             <input
               type="number"
               name="utgifter"
               min="0"
-              placeholder="0"
+              placeholder="Kr"
               pattern="[0-9]*"
               value={ utgifter }
               onChange={ ( e ) => setUtgifter( e.target.value )}
             />
-            <label htmlFor="utgifter">Utgifter</label>
+          <label htmlFor="utgifter">Kr</label>
           </div>
 
           { ! loading && <input type="submit" value="Beregn" /> }
