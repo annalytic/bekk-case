@@ -32,7 +32,6 @@ function Travels( { id, handleEdit } ) {
 					type="number"
 					name="km"
 					min="0"
-					max="75000"
 					placeholder="Km"
 					pattern="[0-9]*"
 					value={ data.km }

@@ -71,6 +71,7 @@ function App() {
 
     /* Make sure that if one input field has value, the other one has too. */
     const invalidArbeidsreiser = filteredArbeidsreiser.some( obj => {
+      console.log(Object.values(obj).every( value => value ));
         return ! Object.values(obj).every( value => value );
     });
 
@@ -84,7 +85,6 @@ function App() {
       setInvalidAntall(false);
     }
 
-    console.log(invalidArbeidsreiser, invalidBesoeksreiser);
 
     /* Constructs data to post to API. */
     const data = {
@@ -93,7 +93,6 @@ function App() {
       'utgifterBomFergeEtc': utgifter
     }
 
-    console.log(data);
 
     const url = 'https://9f22opit6e.execute-api.us-east-2.amazonaws.com/default/reisefradrag';
 
