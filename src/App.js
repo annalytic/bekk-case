@@ -18,7 +18,7 @@ function App() {
   */
   const [ arbeidsreiser, setArbeidsreiser ] = useState([{}]);
   const [ besoeksreiser, setBesoeksreiser ] = useState([{}]);
-  const [ utgifter, setUtgifter ] = useState(0);
+  const [ utgifter, setUtgifter ] = useState('');
 
   const [ loading, setLoading ] = useState(false);
   const [ error, setError ] = useState(false);
@@ -57,6 +57,7 @@ function App() {
     resetKey+=1;
     setArbeidsreiser([{}]);
     setBesoeksreiser([{}]);
+    setUtgifter('');
     setReset(true);
   }
 
@@ -65,22 +66,16 @@ function App() {
     setReset(false);
 
     /* Filters out non-empty objects. */
-    const filteredArbeidsreiser = arbeidsreiser.filter(value => Object.keys(value).length !== 0);
-    const filteredBesoeksreiser = besoeksreiser.filter(value => Object.keys(value).length !== 0);
+    const filteredArbeidsreiser = arbeidsreiser.filter( value => Object.keys(value).length !== 0 );
+    const filteredBesoeksreiser = besoeksreiser.filter( value => Object.keys(value).length !== 0 );
 
-    /* Make sure that antall is not empty if km is filled out. */
-    const invalidArbeidsreiser = filteredArbeidsreiser.some( reise => {
-      if ( reise.km ) {
-        return !reise.antall;
-      }
-      return false;
+    /* Make sure that if one input field has value, the other one has too. */
+    const invalidArbeidsreiser = filteredArbeidsreiser.some( obj => {
+        return ! Object.values(obj).every( value => value );
     });
 
-    const invalidBesoeksreiser = filteredBesoeksreiser.some( reise => {
-      if ( reise.km ) {
-        return !reise.antall;
-      }
-      return false;
+    const invalidBesoeksreiser = filteredBesoeksreiser.some( obj => {
+        return ! Object.values(obj).every( value => value );
     });
 
     if ( invalidArbeidsreiser || invalidBesoeksreiser ) {
@@ -88,6 +83,7 @@ function App() {
     } else {
       setInvalidAntall(false);
     }
+
     console.log(invalidArbeidsreiser, invalidBesoeksreiser);
 
     /* Constructs data to post to API. */
@@ -97,9 +93,11 @@ function App() {
       'utgifterBomFergeEtc': utgifter
     }
 
+    console.log(data);
+
     const url = 'https://9f22opit6e.execute-api.us-east-2.amazonaws.com/default/reisefradrag';
 
-    if ( !invalidArbeidsreiser && !invalidBesoeksreiser ) {
+    if ( ! invalidArbeidsreiser && ! invalidBesoeksreiser ) {
       setLoading( true );
 
       /* Posts data to API and handles response. */
@@ -190,6 +188,7 @@ function App() {
               name="utgifter"
               min="0"
               placeholder="0"
+              value={ utgifter }
               onChange={ ( e ) => setUtgifter( e.target.value )}
             />
             <label htmlFor="utgifter">Utgifter</label>
@@ -199,7 +198,7 @@ function App() {
 
           { loading && <div className="loader"></div> }
 
-          { ! reset && invalidAntall && <p className="error-invalid-antall">Fyll inn antall.</p>}
+          { ! reset && invalidAntall && <p className="error-invalid-antall">Fyll inn begge felt.</p>}
 
           <hr />
 
