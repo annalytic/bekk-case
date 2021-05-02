@@ -2,9 +2,7 @@
 @import './App.css';
 
 /* Global styles */
-@import './styles/forms.css';
-@import './styles/lists.css';
-@import './styles/loader.css';
+@import './styles/_index.css';
 
 body {
   margin: 0;
@@ -24,5 +22,11 @@ code {
 @media screen and (min-width: 800px) {
   .reiser li {
     display: flex;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  main {
+    max-width: 400px;
   }
 }

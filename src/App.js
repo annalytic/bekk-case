@@ -24,6 +24,7 @@ function App() {
   const [ error, setError ] = useState(false);
   const [ result, setResult ] = useState(null);
   const [ reset, setReset ] = useState(false);
+  const [ invalidAntall, setInvalidAntall ] = useState(false);
 
   /* ------------------------------ */
 
@@ -67,7 +68,29 @@ function App() {
     const filteredArbeidsreiser = arbeidsreiser.filter(value => Object.keys(value).length !== 0);
     const filteredBesoeksreiser = besoeksreiser.filter(value => Object.keys(value).length !== 0);
 
-    /* Constructs data to post to API */
+    /* Make sure that antall is not empty if km is filled out. */
+    const invalidArbeidsreiser = filteredArbeidsreiser.some( reise => {
+      if ( reise.km ) {
+        return !reise.antall;
+      }
+      return false;
+    });
+
+    const invalidBesoeksreiser = filteredBesoeksreiser.some( reise => {
+      if ( reise.km ) {
+        return !reise.antall;
+      }
+      return false;
+    });
+
+    if ( invalidArbeidsreiser || invalidBesoeksreiser ) {
+      setInvalidAntall(true);
+    } else {
+      setInvalidAntall(false);
+    }
+    console.log(invalidArbeidsreiser, invalidBesoeksreiser);
+
+    /* Constructs data to post to API. */
     const data = {
       'arbeidsreiser': filteredArbeidsreiser,
       'besoeksreiser': filteredBesoeksreiser,
@@ -76,26 +99,28 @@ function App() {
 
     const url = 'https://9f22opit6e.execute-api.us-east-2.amazonaws.com/default/reisefradrag';
 
-    setLoading( true );
+    if ( !invalidArbeidsreiser && !invalidBesoeksreiser ) {
+      setLoading( true );
 
-    /* Posts data to API and handles response. */
-    fetch( url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify( data ),
-    } )
-      .then( ( res ) => res.json() )
-      .then( ( res ) => {
-        setLoading( false );
-        setResult( res.reisefradrag );
+      /* Posts data to API and handles response. */
+      fetch( url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( data ),
       } )
-      .catch( ( error ) => {
-        console.error( 'Error', error );
-        setError( true );
-        setLoading( false );
-      });
+        .then( ( res ) => res.json() )
+        .then( ( res ) => {
+          setLoading( false );
+          setResult( res.reisefradrag );
+        } )
+        .catch( ( error ) => {
+          console.error( 'Error', error );
+          setError( true );
+          setLoading( false );
+        });
+    }
   }
 
   /* ------------------------------ */
@@ -173,6 +198,10 @@ function App() {
           { ! loading && <input type="submit" value="Beregn" /> }
 
           { loading && <div className="loader"></div> }
+
+          { ! reset && invalidAntall && <p className="error-invalid-antall">Fyll inn antall.</p>}
+
+          <hr />
 
           <button
             type="button"

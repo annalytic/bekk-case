@@ -1,5 +1,5 @@
 .App {
-	width: 800px;
+	width: 700px;
 	max-width: 100%;
 	margin: 100px auto 0;
 	min-height: 500px;
@@ -9,8 +9,10 @@
 	padding: 40px;
 }
 
-header {
-	display: flex;
+@media screen and (min-width: 800px) {
+	header {
+			display: flex;
+	}
 }
 
 .logo {
@@ -22,7 +24,6 @@ header {
 	background-color: #fff;
 	border: 1px solid black;
 	padding: 20px;
-	max-width: 430px;
 	margin-top: 40px;
 }
 
