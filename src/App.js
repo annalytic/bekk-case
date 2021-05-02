@@ -16,18 +16,17 @@ function App() {
   /**
   * States
   */
-  const [ arbeidsreiser, setArbeidsreiser ] = useState([{}]);
-  const [ besoeksreiser, setBesoeksreiser ] = useState([{}]);
+  const [ arbeidsreiser, setArbeidsreiser ] = useState([{ km: '', antall: '' }]);
+  const [ besoeksreiser, setBesoeksreiser ] = useState([{ km: '', antall: '' }]);
   const [ utgifter, setUtgifter ] = useState('');
 
   const [ loading, setLoading ] = useState(false);
   const [ error, setError ] = useState(false);
-  const [ result, setResult ] = useState(null);
+  const [ result, setResult ] = useState(false);
   const [ reset, setReset ] = useState(false);
   const [ invalidAntall, setInvalidAntall ] = useState(false);
 
   /* ------------------------------ */
-
   /**
   * Functions
   */
@@ -38,7 +37,7 @@ function App() {
   }
 
   const handleAddAR = () => {
-    const newArbeidsreiser = [...arbeidsreiser, {}];
+    const newArbeidsreiser = [...arbeidsreiser, { km: '', antall: '' }];
     setArbeidsreiser(newArbeidsreiser);
   }
 
@@ -49,14 +48,14 @@ function App() {
   }
 
   const handleAddBR = () => {
-    const newBesoeksreiser = [...besoeksreiser, {}];
+    const newBesoeksreiser = [...besoeksreiser, { km: '', antall: '' }];
     setBesoeksreiser(newBesoeksreiser);
   }
 
   const handleReset = () => {
     resetKey+=1;
-    setArbeidsreiser([{}]);
-    setBesoeksreiser([{}]);
+    setArbeidsreiser([{ km: '', antall: '' }]);
+    setBesoeksreiser([{ km: '', antall: '' }]);
     setUtgifter('');
     setReset(true);
   }
@@ -65,13 +64,17 @@ function App() {
     e.preventDefault();
     setReset(false);
 
-    /* Filters out non-empty objects. */
-    const filteredArbeidsreiser = arbeidsreiser.filter( value => Object.keys(value).length !== 0 );
-    const filteredBesoeksreiser = besoeksreiser.filter( value => Object.keys(value).length !== 0 );
+    /* Filters out objects with non-empty values. */
+    const filteredArbeidsreiser = arbeidsreiser.filter( obj => {
+      return Object.values(obj).filter( value => ( value === "" ) ).length !== 2;
+    } );
+
+    const filteredBesoeksreiser = besoeksreiser.filter( obj => {
+      return Object.values(obj).filter( value => ( value === "" ) ).length !== 2;
+    } );
 
     /* Make sure that if one input field has value, the other one has too. */
     const invalidArbeidsreiser = filteredArbeidsreiser.some( obj => {
-        console.log(Object.values(obj).every( value => value ));
         return ! Object.values(obj).every( value => value );
     });
 
@@ -85,14 +88,12 @@ function App() {
       setInvalidAntall(false);
     }
 
-
     /* Constructs data to post to API. */
     const data = {
       'arbeidsreiser': filteredArbeidsreiser,
       'besoeksreiser': filteredBesoeksreiser,
       'utgifterBomFergeEtc': utgifter
     }
-
 
     const url = 'https://9f22opit6e.execute-api.us-east-2.amazonaws.com/default/reisefradrag';
 
@@ -136,7 +137,7 @@ function App() {
       </header>
 
       <main>
-        { ( ! reset && ! loading && result >= 0 && result !== null ) && (
+        { ( ! reset && ! loading && result >= 0 && result !== false ) && (
           <Results result={ result } />
         ) }
 
