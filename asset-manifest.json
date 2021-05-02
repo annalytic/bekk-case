@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/bekk-case/static/css/main.626c2cbd.chunk.css",
-    "main.js": "/bekk-case/static/js/main.762ffd49.chunk.js",
-    "main.js.map": "/bekk-case/static/js/main.762ffd49.chunk.js.map",
+    "main.js": "/bekk-case/static/js/main.368bf9db.chunk.js",
+    "main.js.map": "/bekk-case/static/js/main.368bf9db.chunk.js.map",
     "runtime-main.js": "/bekk-case/static/js/runtime-main.7e7e0b6d.js",
     "runtime-main.js.map": "/bekk-case/static/js/runtime-main.7e7e0b6d.js.map",
     "static/js/2.3667e42d.chunk.js": "/bekk-case/static/js/2.3667e42d.chunk.js",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.7e7e0b6d.js",
     "static/js/2.3667e42d.chunk.js",
     "static/css/main.626c2cbd.chunk.css",
-    "static/js/main.762ffd49.chunk.js"
+    "static/js/main.368bf9db.chunk.js"
   ]
 }
