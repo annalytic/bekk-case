@@ -24,6 +24,10 @@ header h1 {
 	word-break: break-all;
 }
 
+header p {
+	margin-bottom: 0;
+}
+
 @media screen and (min-width: 800px) {
 	header h1 {
 		margin: 0;
