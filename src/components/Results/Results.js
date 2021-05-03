@@ -1,3 +1,8 @@
+/**
+* External dependencies
+*/
+import React from 'react';
+
 function Results( { result } ) {
 	if ( result === null ) {
 		return (

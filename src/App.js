@@ -11,13 +11,14 @@ import Travels from './components/Travels/Travels';
 import Results from './components/Results/Results';
 
 let resetKey = 0;
+const travelInit = { km: '', antall: '' };
 
 function App() {
   /**
   * States
   */
-  const [ arbeidsreiser, setArbeidsreiser ] = useState([{ km: '', antall: '' }]);
-  const [ besoeksreiser, setBesoeksreiser ] = useState([{ km: '', antall: '' }]);
+  const [ arbeidsreiser, setArbeidsreiser ] = useState([travelInit]);
+  const [ besoeksreiser, setBesoeksreiser ] = useState([travelInit]);
   const [ utgifter, setUtgifter ] = useState('');
 
   const [ loading, setLoading ] = useState(false);
@@ -37,7 +38,7 @@ function App() {
   }
 
   const handleAddAR = () => {
-    const newArbeidsreiser = [...arbeidsreiser, { km: '', antall: '' }];
+    const newArbeidsreiser = [...arbeidsreiser, travelInit];
     setArbeidsreiser(newArbeidsreiser);
   }
 
@@ -48,14 +49,14 @@ function App() {
   }
 
   const handleAddBR = () => {
-    const newBesoeksreiser = [...besoeksreiser, { km: '', antall: '' }];
+    const newBesoeksreiser = [...besoeksreiser, travelInit];
     setBesoeksreiser(newBesoeksreiser);
   }
 
   const handleReset = () => {
     resetKey+=1;
-    setArbeidsreiser([{ km: '', antall: '' }]);
-    setBesoeksreiser([{ km: '', antall: '' }]);
+    setArbeidsreiser([travelInit]);
+    setBesoeksreiser([travelInit]);
     setUtgifter('');
     setReset(true);
   }
@@ -64,7 +65,7 @@ function App() {
     e.preventDefault();
     setReset(false);
 
-    /* Filters out objects with non-empty values. */
+    /* Filters out objects with 2 non-empty values. */
     const filteredArbeidsreiser = arbeidsreiser.filter( obj => {
       return Object.values(obj).filter( value => ( value === "" ) ).length !== 2;
     } );

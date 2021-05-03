@@ -1,10 +1,15 @@
+/**
+* External dependencies
+*/
 import React, { useState } from 'react';
+
+const travelInit = { km: '', antall: '' };
 
 function Travels( { id, handleEdit } ) {
 	/**
 	* States
 	*/
-	const [ data, setData ] = useState( { km: '', antall: '' } );
+	const [ data, setData ] = useState( travelInit );
 
 	/* ------------------------------ */
 
