@@ -132,8 +132,8 @@ function App() {
       <header>
         <img src={logo} className="logo" alt="logo" />
         <div>
-          <h1>Reiseregning</h1>
-          <p>Beregning av reisefradrag</p>
+          <h1>Reisefradragskalkulator</h1>
+          <p>Beregn reisefradrag for arbeidsreiser og besøksreiser.</p>
         </div>
       </header>
 

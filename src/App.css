@@ -9,9 +9,24 @@
 	padding: 40px;
 }
 
+header {
+	margin-bottom: 40px;
+}
+
 @media screen and (min-width: 800px) {
 	header {
 			display: flex;
+			align-items: center;
+	}
+}
+
+header h1 {
+	word-break: break-all;
+}
+
+@media screen and (min-width: 800px) {
+	header h1 {
+		margin: 0;
 	}
 }
 
