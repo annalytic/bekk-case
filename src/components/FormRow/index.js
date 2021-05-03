@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 const travelInit = { km: '', antall: '' };
 
-function Travels( { id, handleEdit } ) {
+function FormRow( { id, handleEdit } ) {
 	/**
 	* States
 	*/
@@ -39,6 +39,7 @@ function Travels( { id, handleEdit } ) {
 					min="0"
 					placeholder="Km"
 					pattern="[0-9]*"
+					required
 					value={ data.km }
 					onChange={ handleChange }
 				/>
@@ -52,6 +53,7 @@ function Travels( { id, handleEdit } ) {
 					min="0"
 					placeholder="Antall"
 					pattern="[0-9]*"
+					required
 					value={ data.antall }
 					onChange={ handleChange }
 				/>
@@ -61,4 +63,4 @@ function Travels( { id, handleEdit } ) {
 	);
 }
 
-export default Travels;
+export default FormRow;
